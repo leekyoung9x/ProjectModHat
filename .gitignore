@@ -1,0 +1,103 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/
+Logs/
+MemoryCaptures/
+Obj/
+Builds/
+Build/
+BuildLogs/
+UserSettings/
+Assets/StreamingAssets/UnityCrashHandler*
+Assets/StreamingAssets/UnityShaderCompiler*
+.utmp/
+.vs/
+
+# ===================================== #
+# Visual Studio / Rider / JetBrains IDE #
+# ===================================== #
+.vs/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.unityproj
+*.tmp
+*.log
+*.ide
+.idea/
+*.sln*
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ========== #
+# Unity Cache #
+# ========== #
+*.asset
+*.pidb.meta
+*.pdb
+*.mdb
+*.ilk
+*.exp
+*.idb
+*.sdf
+*.tlog
+*.VC.db
+*.opendb
+*.VC.opendb
+
+# ============= #
+# Unity Packages #
+# ============= #
+Packages/
+*.unitypackage
+
+# =============== #
+# Local Unity files #
+# =============== #
+*.apk
+*.aab
+*.obb
+*.app
+*.ipa
+
+# =============== #
+# Additional Files #
+# =============== #
+# Rider files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Ignore log files and crash dumps
+*.log
+*.mdmp
+
+# Ignore backups
+Backup*/
+Backup~/
+
+# Ignore generated project files
+Assets/Plugins/*/Android/libs/
+Assets/Plugins/*/Android/bin/
+
+# Ignore cloud services cache
+Assets/Scripts/CloudDataCache/
+
+# Ignore PlayModeState
+ProjectSettings/PlayModeState.json
