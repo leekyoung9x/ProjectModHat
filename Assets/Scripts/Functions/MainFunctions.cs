@@ -1,5 +1,6 @@
 ﻿using Functions.AutoFunctions;
 using Functions.HandlerFunctions;
+using HairMod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,8 +137,10 @@ namespace Functions
             ItemHandler.Update();
             ChatableHandler.Update();
             ListCharFunctions.Update();
-            AutoBuyFunctions.Update();
+            Functions.AutoFunctions.AutoBuyFunctions.Update();
             AutoPickFunctions.update();
+            BossFunctions.FocusBoss();
+            AutoPoint.update();
         }
 
         public void onChatFromMe(string text, string to)

@@ -4,12 +4,10 @@ namespace Functions
 {
 	public class BossFunctions
 	{
-		// Token: 0x06000ABA RID: 2746 RVA: 0x00003CC4 File Offset: +0x00001EC4
 		public BossFunctions()
 		{
 		}
 
-		// Token: 0x06000ABB RID: 2747 RVA: 0x00091DB4 File Offset: 0x0008FFB4
 		public BossFunctions(string a)
 		{
 			a = a.Replace("BOSS ", "").Replace(" vừa xuất hiện tại ", "|").Replace(" appear at ", "|");
@@ -23,7 +21,6 @@ namespace Functions
 			this.AppearTime = DateTime.Now;
 		}
 
-		// Token: 0x06000ABC RID: 2748 RVA: 0x00091E44 File Offset: 0x00090044
 		public int GetMapID(string a)
 		{
 			for (int i = 0; i < TileMap.mapNames.Length; i++)
@@ -36,7 +33,6 @@ namespace Functions
 			return -1;
 		}
 
-		// Token: 0x06000ABD RID: 2749 RVA: 0x00091E78 File Offset: 0x00090078
 		public void paint(mGraphics a, int b, int c, int d)
 		{
 			TimeSpan timeSpan = DateTime.Now.Subtract(this.AppearTime);
@@ -65,18 +61,35 @@ namespace Functions
 			}), b, c, d);
 		}
 
-		// Token: 0x0400147C RID: 5244
-		public string NameBoss;
+        public static void FocusBoss()
+        {
+            if (BossFunctions.focusBoss && mSystem.currentTimeMillis() - BossFunctions.currFocusBoss >= 500L)
+            {
+                BossFunctions.currFocusBoss = mSystem.currentTimeMillis();
+                for (int i = 0; i < GameScr.vCharInMap.size(); i++)
+                {
+                    global::Char @char = (global::Char)GameScr.vCharInMap.elementAt(i);
+                    if (@char != null && @char.cTypePk == 5 && !@char.cName.StartsWith("Đ"))
+                    {
+                        global::Char.myCharz().focusManualTo(@char);
+                        return;
+                    }
+                }
+            }
+        }
 
-		// Token: 0x0400147D RID: 5245
+        public string NameBoss;
+
 		public string MapName;
 
-		// Token: 0x0400147E RID: 5246
 		public int MapId;
 
-		// Token: 0x0400147F RID: 5247
 		public DateTime AppearTime;
 
 		public static bool LineBoss;
-	}
+
+        public static bool focusBoss;
+
+        private static long currFocusBoss;
+    }
 }

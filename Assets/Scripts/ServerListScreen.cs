@@ -31,8 +31,10 @@ public class ServerListScreen : mScreen, IActionListener
 	public static Command cmdDeleteRMS;
 
 	private int lY;
-    public static string smartPhoneVN = "NRO:nrohat.com:14445:0,0,0";
-    public static string javaVN = smartPhoneVN;
+	//public static string smartPhoneVN = "NRO:nrohat.com:14445:0,0,0";
+	public static string smartPhoneVN = "NRO:188.166.248.61:14445:0,0,0";
+	//public static string smartPhoneVN = "NRO:localhost:14445:0,0,0";
+	public static string javaVN = smartPhoneVN;
 	public static string smartPhoneIn = smartPhoneVN;
 
 	public static string javaIn = smartPhoneVN;

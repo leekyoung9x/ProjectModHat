@@ -28,7 +28,7 @@ namespace Functions
             AutoItem.update();
             AutoNhat.update();
             LoadMap.update();
-           
+
         }
         private static void UseItem(int templateId)
         {
@@ -145,6 +145,10 @@ namespace Functions
                 case 28:
                     AutoPoint.ShowMenuAutoPoint();
                     break;
+                case 29:
+                    BossFunctions.focusBoss = !BossFunctions.focusBoss;
+                    GameScr.info1.addInfo("Focus Boss:\n" + (BossFunctions.focusBoss ? "ON" : "OFF"), 0);
+                    break;
                 default:
                     break;
             }
@@ -174,11 +178,12 @@ namespace Functions
         private static void myVectorMenu()
         {
             MyVector myVector = new MyVector();
-            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
-            myVector.addElement(new Command("Đổi Khu", getInstance(), 1, null));
-            myVector.addElement(new Command("Bông Tai", getInstance(), 2, null));
+            if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                myVector.addElement(new Command("Đổi Khu", getInstance(), 1, null));
+                myVector.addElement(new Command("Bông Tai", getInstance(), 2, null));
             }
-            myVector.addElement(new Command("Cheat\n["+Time.timeScale+"]", getInstance(), 5, null));
+            myVector.addElement(new Command("Cheat\n[" + Time.timeScale + "]", getInstance(), 5, null));
             myVector.addElement(new Command("Xmap", getInstance(), 17, null));
             myVector.addElement(new Command("Auto Point", getInstance(), 28, null));
             myVector.addElement(new Command("Auto Skill", getInstance(), 3, null));
@@ -191,8 +196,9 @@ namespace Functions
         private static void myVectorMenu3()
         {
             MyVector myVector = new MyVector();
-            myVector.addElement(new Command("Thông Báo Boss\n"+(MainFunctions.isSanBoss ? "[ON]":"[OFF]"), getInstance(), 12, null));
+            myVector.addElement(new Command("Thông Báo Boss\n" + (MainFunctions.isSanBoss ? "[ON]" : "[OFF]"), getInstance(), 12, null));
             myVector.addElement(new Command("Đường Kẻ Boss\n" + (BossFunctions.LineBoss ? "[ON]" : "[OFF]"), getInstance(), 13, null));
+            myVector.addElement(new Command("Focus Boss\n" + (BossFunctions.focusBoss ? "[ON]" : "[OFF]"), getInstance(), 29, null));
             GameCanvas.menu.startAt(myVector, 3);
         }
         private static void myVectorMenu2()
@@ -200,7 +206,7 @@ namespace Functions
             MyVector myVector = new MyVector();
             myVector.addElement(new Command("TDLT", getInstance(), 7, null));
             myVector.addElement(new Command("Né Siêu Quái\n" + (AutoPickMobHandler.IsNeSieuQuai ? "[ON]" : "[OFF]"), getInstance(), 8, null));
-            myVector.addElement(new Command("Dịch Chuyển Đến Quái\n"+(SkillFunctions.dichChuyenPem ? "[ON]":"[OFF]"), getInstance(), 9, null));
+            myVector.addElement(new Command("Dịch Chuyển Đến Quái\n" + (SkillFunctions.dichChuyenPem ? "[ON]" : "[OFF]"), getInstance(), 9, null));
             myVector.addElement(new Command("Vượt Địa Hình\n" + (AutoPickMobHandler.IsVuotDiaHinh ? "[ON]" : "[OFF]"), getInstance(), 10, null));
             GameCanvas.menu.startAt(myVector, 3);
         }
@@ -210,11 +216,11 @@ namespace Functions
         public static void ShowMenuMore() => myVectorMenu4();
         public void onChatFromMe(string text, string to)
         {
-          
-         
+
+
             if (ChatTextField.gI().strChat.Equals(MainFunctions.inputSpeed[0]))
             {
-              
+
                 try
                 {
                     float num4 = float.Parse(ChatTextField.gI().tfChat.getText());
@@ -253,17 +259,17 @@ namespace Functions
         ///
         static MenuFunctions()
         {
-         
+
         }
         ///
         /// <summary>
-   
+
         /// </summary>
         public void onCancelChat()
         {
-          
+
         }
-        
+
 
     }
 }

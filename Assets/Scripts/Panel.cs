@@ -7228,7 +7228,8 @@ public class Panel : IActionListener, IChatable
 					if (currItem.buySpec > 0)
 					{
 						myVector.addElement(new Command(mResources.buy_with + "\n" + Res.formatNumber2(currItem.buySpec), this, 3005, currItem));
-					}
+                        myVector.addElement(new Command(mResources.BUYS, AutoBuyFunctions.getInstance(), 3, new AutoBuyFunctions.Item((int)this.currItem.template.id, -1, false, 3)));
+                    }
 				}
 				else if (typeShop == 4)
 				{
@@ -7265,14 +7266,14 @@ public class Panel : IActionListener, IChatable
 					{
 						myVector.addElement(new Command(mResources.buy_with + "\n" + Res.formatNumber2(currItem.buyCoin) + "\n" + mResources.XU, this, 3000, currItem));
 
-						myVector.addElement(new Command("Mua Nhiều\n" + Res.formatNumber2((long)this.currItem.buyCoin) + " Vàng/1", AutoBuyFunctions.getInstance(), 3, new AutoBuyFunctions.Item((int)this.currItem.template.id, -1, false, false)));
-					}
+                        myVector.addElement(new Command("Mua Nhiều\n" + Res.formatNumber2((long)this.currItem.buyCoin) + " Vàng/1", AutoBuyFunctions.getInstance(), 3, new AutoBuyFunctions.Item((int)this.currItem.template.id, -1, false, 0)));
+                    }
 					if (currItem.buyGold > 0)
 					{
 						myVector.addElement(new Command(mResources.buy_with + "\n" + Res.formatNumber2(currItem.buyGold) + "\n" + mResources.LUONG, this, 3001, currItem));
 
-						myVector.addElement(new Command("Mua Nhiều\n" + Res.formatNumber2((long)this.currItem.buyGold) + " Ngọc/1", AutoBuyFunctions.getInstance(), 3, new AutoBuyFunctions.Item((int)this.currItem.template.id, -1, false, false)));
-					}
+                        myVector.addElement(new Command("Mua Nhiều\n" + Res.formatNumber2((long)this.currItem.buyGold) + " Ngọc/1", AutoBuyFunctions.getInstance(), 3, new AutoBuyFunctions.Item((int)this.currItem.template.id, -1, false, 1)));
+                    }
 				}
 				else
 				{
@@ -7421,7 +7422,8 @@ public class Panel : IActionListener, IChatable
 					else
 					{
 						myVector.addElement(new Command(mResources.USE, this, 2001, currItem));
-						if (this.position != 1 && item.template.type == 29)
+                        myVector.addElement(new Command("Auto Sử dụng", this, 3144, this.currItem));
+                        if (this.position != 1 && item.template.type == 29)
 						{
 							myVector.addElement(new Command("Thêm vào ds Item", this, 3144, this.currItem));
 						}

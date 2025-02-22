@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class GameMidlet
 {
-    public static string IP = "nrohat.com";
+	//public static string IP = "nrohat.com";
+	public static string IP = "188.166.248.61";
+	//public static string IP = "localhost";
 
-    public static int PORT = 14445;
+	public static int PORT = 14445;
 
 	public static string IP2;
 

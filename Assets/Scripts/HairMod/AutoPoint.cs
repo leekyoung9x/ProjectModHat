@@ -38,25 +38,142 @@ namespace HairMod
 			return _Instance;
 		}
 
-		public static void DoIt()
-		{
-			if (Char.myCharz().cDamGoc < damageToAuto)
-			{
-				if (Char.myCharz().cTiemNang > Char.myCharz().cDamGoc * 100 && GameCanvas.gameTick % 20 == 0)
-					Service.gI().upPotential(2, 1);
-			}
-			else if (Char.myCharz().cHPGoc < hpToAuto)
-			{
-				if (Char.myCharz().cTiemNang > Char.myCharz().cHPGoc + 1000 && GameCanvas.gameTick % 20 == 0)
-					Service.gI().upPotential(0, 1);
-			}
-			else if (Char.myCharz().cMPGoc < mpToAuto && Char.myCharz().cTiemNang > Char.myCharz().cMPGoc + 1000 && GameCanvas.gameTick % 20 == 0)
-			{
-				Service.gI().upPotential(1, 1);
-			}
-		}
+        public static void DoIt()
+        {
+            // Tăng Damage (Sức đánh)
+            if (Char.myCharz().cDamGoc < damageToAuto && Char.myCharz().cTiemNang > Char.myCharz().cDamGoc * 100 && GameCanvas.gameTick % 10 == 0)
+            {
+                long diemTiemNang = Char.myCharz().cTiemNang;
+                long damageHienTai = Char.myCharz().cDamGoc;
+                int damageMucTieu = damageToAuto;
 
-		public void onChatFromMe(string text, string to)
+                int soLanCong = 0;
+
+                // Tính số lần có thể cộng mà không vượt damageToAuto
+                while (diemTiemNang >= (damageHienTai * 100) && damageHienTai < damageMucTieu)
+                {
+                    diemTiemNang -= (damageHienTai * 100);
+                    damageHienTai++;
+                    soLanCong++;
+                }
+
+                // Điều chỉnh số lần cộng theo quy tắc 1, 10, 100
+                if (soLanCong >= 100)
+                    soLanCong = 100;
+                else if (soLanCong >= 10)
+                    soLanCong = 10;
+                else if (soLanCong > 0)
+                    soLanCong = 1;
+
+                if (soLanCong > 0)
+                {
+                    Service.gI().upPotential(2, soLanCong);
+                }
+            }
+            // Tăng HP
+            else if (Char.myCharz().cHPGoc < hpToAuto && Char.myCharz().cTiemNang > Char.myCharz().cHPGoc + 1000 && GameCanvas.gameTick % 10 == 0)
+            {
+                (int soLanCoTheCong, long mauSauCong, long diemConLai) = TinhSoLanCong(Char.myCharz().cHPGoc, Char.myCharz().cTiemNang, false);
+                (int soLanMuonCong, long diemCan) = TinhDiemTiemNangCan(Char.myCharz().cHPGoc, hpToAuto, false);
+
+                // Chọn số lần cộng tối đa có thể nhưng không vượt quá hpToAuto
+                long soLanCong = (soLanCoTheCong < soLanMuonCong) ? soLanCoTheCong : soLanMuonCong;
+
+                // Giới hạn số lần cộng để không vượt quá hpToAuto
+                if (Char.myCharz().cHPGoc + (soLanCong * 20) > hpToAuto)
+                {
+                    soLanCong = (hpToAuto - Char.myCharz().cHPGoc) / 20;
+                }
+
+                // Điều chỉnh số lần cộng theo quy tắc 1, 10, 100
+                if (soLanCong >= 100)
+                    soLanCong = 100;
+                else if (soLanCong >= 10)
+                    soLanCong = 10;
+                else
+                    soLanCong = 1;
+
+                if (soLanCong > 0)
+                {
+                    Service.gI().upPotential(0, (int)soLanCong);
+                }
+            }
+
+            // Tăng MP
+            else if (Char.myCharz().cMPGoc < mpToAuto)
+            {
+                if (Char.myCharz().cTiemNang > Char.myCharz().cMPGoc + 1100 && GameCanvas.gameTick % 10 == 0)
+                {
+                    (int soLanCoTheCong, long mpSauCong, long diemConLai) = TinhSoLanCong(Char.myCharz().cMPGoc, Char.myCharz().cTiemNang, true);
+                    (int soLanMuonCong, long diemCan) = TinhDiemTiemNangCan(Char.myCharz().cMPGoc, mpToAuto, true);
+
+                    long soLanCong = (soLanCoTheCong < soLanMuonCong) ? soLanCoTheCong : soLanMuonCong;
+
+                    // Giới hạn số lần cộng để không vượt quá hpToAuto
+                    if (Char.myCharz().cMPGoc + (soLanCong * 20) > mpToAuto)
+                    {
+                        soLanCong = (mpToAuto - Char.myCharz().cMPGoc) / 20;
+                    }
+
+                    // Điều chỉnh số lần cộng theo quy tắc 1, 10, 100
+                    if (soLanCong >= 100)
+                        soLanCong = 100;
+                    else if (soLanCong >= 10)
+                        soLanCong = 10;
+                    else
+                        soLanCong = 1;
+
+                    if (soLanCong > 0)
+                    {
+                        // Giới hạn số lần cộng: 1 -> 10 -> 100
+                        soLanCong = (soLanCong > 100) ? 100 : (soLanCong > 10 ? 10 : 1);
+
+                        Service.gI().upPotential(1, (int)soLanCong);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tính số lần có thể cộng dựa trên điểm tiềm năng hiện tại.
+        /// </summary>
+        private static (int soLanCong, long mauSauCong, long diemConLai) TinhSoLanCong(long mauHienTai, long diemTiemNang, bool isMP)
+        {
+            int tangMau = 20; // Mỗi lần cộng thêm 20 máu hoặc MP
+            int soLanCong = 0;
+
+            while (diemTiemNang >= ((isMP ? 1100 : 1000) + mauHienTai))
+            {
+                long diemCan = (isMP ? 1100 : 1000) + mauHienTai;
+                diemTiemNang -= diemCan;
+                mauHienTai += tangMau;
+                soLanCong++;
+            }
+
+            return (soLanCong, mauHienTai, diemTiemNang);
+        }
+
+        /// <summary>
+        /// Tính số lần cần cộng và điểm tiềm năng cần có để đạt được mức máu/MP mục tiêu.
+        /// </summary>
+        static (int soLanCong, long diemCan) TinhDiemTiemNangCan(long mauHienTai, long mauMucTieu, bool isMP)
+        {
+            int tangMau = 20; // Mỗi lần cộng thêm 20 máu hoặc MP
+            int soLanCong = 0;
+            long diemCan = 0;
+
+            while (mauHienTai < mauMucTieu)
+            {
+                long diemCanChoLanNay = (isMP ? 1100 : 1000) + mauHienTai;
+                diemCan += diemCanChoLanNay;
+                mauHienTai += tangMau;
+                soLanCong++;
+            }
+
+            return (soLanCong, diemCan);
+        }
+
+        public void onChatFromMe(string text, string to)
 		{
 			if (ChatTextField.gI().tfChat.getText() != null && !ChatTextField.gI().tfChat.getText().Equals(string.Empty) && !text.Equals(string.Empty) && text != null)
 			{
